@@ -1,4 +1,4 @@
-package com.langhong
+package com.langhong.commodities
 
 import io.flutter.embedding.android.FlutterFragmentActivity
 import io.flutter.embedding.engine.FlutterEngine

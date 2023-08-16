@@ -109,7 +109,7 @@ class _MarketPricePageState extends State<MarketPricePage> {
                                   style: AppFont.titleText12),
                             ],
                           ),
-                          SizedBox(height: 3),
+                          const SizedBox(height: 3),
                           XAUUSDGold(
                               name: 'XAU/USD',
                               bidSpot:
