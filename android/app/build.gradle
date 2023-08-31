@@ -52,9 +52,9 @@ def keystoreProperties = new Properties()
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.langhong.commodities"
         minSdkVersion flutter.minSdkVersion
-        targetSdkVersion flutter.targetSdkVersion
+        targetSdkVersion 33
         versionCode 1
-        versionName '1.0.0'
+        versionName '1.0.1'
         minSdkVersion 20
     }
 

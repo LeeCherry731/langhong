@@ -99,16 +99,16 @@ class _ShowOrderPlacePageState extends State<ShowOrderPlacePage> {
                     GestureDetector(
                       onTap: () {
                         clearConnection();
-
-                        Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                            builder: (BuildContext context) => HomePage(
-                              tabPage: 3,
-                            ),
-                          ),
-                          (route) => false,
-                        );
+                        Get.back();
+                        // Navigator.pushAndRemoveUntil(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (BuildContext context) => HomePage(
+                        //       tabPage: 3,
+                        //     ),
+                        //   ),
+                        //   (route) => false,
+                        // );
                       },
                       child: Image.asset('assets/images/arrow-left.png',
                           width: 40, height: 40),
@@ -129,8 +129,8 @@ class _ShowOrderPlacePageState extends State<ShowOrderPlacePage> {
               Container(
                 width: double.maxFinite,
                 height: Platform.isAndroid
-                    ? height - (height * 0.17)
-                    : height - (height * 0.19),
+                    ? height - (height * 0.2)
+                    : height - (height * 0.3),
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -142,7 +142,7 @@ class _ShowOrderPlacePageState extends State<ShowOrderPlacePage> {
                     child: orderPlaceList.isEmpty
                         ? Column(
                             children: [
-                              SizedBox(height: (height - (height * 0.17)) / 2),
+                              SizedBox(height: height * .35),
                               const Center(
                                   child: Text('ไม่พบข้อมูลรายการรอราคา',
                                       style: AppFont.bodyText05)),

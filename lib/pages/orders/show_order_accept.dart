@@ -111,8 +111,8 @@ class _ShowOrderAcceptPageState extends State<ShowOrderAcceptPage> {
               Container(
                 width: double.maxFinite,
                 height: Platform.isAndroid
-                    ? height - (height * 0.17)
-                    : height - (height * 0.19),
+                    ? height - (height * 0.2)
+                    : height - (height * 0.3),
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -124,7 +124,7 @@ class _ShowOrderAcceptPageState extends State<ShowOrderAcceptPage> {
                     child: orderAcceptList.isEmpty
                         ? Column(
                             children: [
-                              SizedBox(height: (height - (height * 0.17)) / 2),
+                              SizedBox(height: height * .35),
                               const Center(
                                   child: Text('ไม่พบข้อมูลรายการยืนยันราคา',
                                       style: AppFont.bodyText05)),

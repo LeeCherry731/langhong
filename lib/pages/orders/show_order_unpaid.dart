@@ -113,8 +113,8 @@ class _ShowOrderUnpaidPageState extends State<ShowOrderUnpaidPage> {
               Container(
                 width: double.maxFinite,
                 height: Platform.isAndroid
-                    ? height - (height * 0.17)
-                    : height - (height * 0.19),
+                    ? height - (height * 0.2)
+                    : height - (height * 0.3),
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -126,7 +126,7 @@ class _ShowOrderUnpaidPageState extends State<ShowOrderUnpaidPage> {
                     child: orderUnpaidList.isEmpty
                         ? Column(
                             children: [
-                              SizedBox(height: (height - (height * 0.17)) / 2),
+                              SizedBox(height: height * .35),
                               const Center(
                                   child: Text('ไม่พบข้อมูลรายการสถานะคงค้าง',
                                       style: AppFont.bodyText05)),

@@ -122,8 +122,8 @@ class _OrderMenuPageState extends State<OrderMenuPage> {
                                     color: Colors.white,
                                     border:
                                         Border.all(color: AppColor.lightGrey),
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(5)),
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(5)),
                                   ),
                                   child: ListTile(
                                     title: Text(
