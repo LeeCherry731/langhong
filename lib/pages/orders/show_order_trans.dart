@@ -64,7 +64,7 @@ class _ShowOrderTransPageState extends State<ShowOrderTransPage> {
     var height = MediaQuery.of(context).size.height;
     return SafeArea(
         child: isLoad == false
-            ? Center(child: CircularProgressIndicator())
+            ? const Center(child: CircularProgressIndicator())
             : buidReportOrderTrans(width, height));
   }
 
@@ -93,7 +93,7 @@ class _ShowOrderTransPageState extends State<ShowOrderTransPage> {
                       child: Image.asset('assets/images/arrow-left.png',
                           width: 40, height: 40),
                     ),
-                    Spacer(),
+                    const Spacer(),
                     Text('${mainCtr.userProfileList.value.memberRef}',
                         style: AppFont.titleText04),
                     AppUtility.buildPopUpMenu(mainCtr.userPortfolioList.value),
@@ -133,12 +133,12 @@ class _ShowOrderTransPageState extends State<ShowOrderTransPage> {
                               Text(
                                   'ราคาตลาด${AppUtility.convertThaiDate(mainCtr.marketPriceList[0].dateTime.toString())}',
                                   style: AppFont.titleText12),
-                              SizedBox(height: 3),
+                              const SizedBox(height: 3),
                               XAUUSDGold(
                                   name: 'XAU/USD',
                                   bidSpot: mainCtr.marketPriceList[0].bidSpot!,
                                   askSpot: mainCtr.marketPriceList[0].askSpot!),
-                              SizedBox(height: 20),
+                              const SizedBox(height: 20),
                               //-- 2. ส่วนแสดงรายงาน
                               //-- 2.1 Heading Report
                               Container(
@@ -150,10 +150,10 @@ class _ShowOrderTransPageState extends State<ShowOrderTransPage> {
                                       height: height * 0.12,
                                       color: AppColor.blue,
                                       alignment: Alignment.center,
-                                      child: Column(
+                                      child: const Column(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
-                                        children: const [
+                                        children: [
                                           Text('วันทำรายการ/',
                                               style: AppFont.bodyText14),
                                           Text('วันครบกำหนด',
@@ -182,7 +182,7 @@ class _ShowOrderTransPageState extends State<ShowOrderTransPage> {
                                       height: height * 0.12,
                                       color: AppColor.blue,
                                       alignment: Alignment.center,
-                                      child: Text('ราคา',
+                                      child: const Text('ราคา',
                                           style: AppFont.bodyText14),
                                     ),
                                     Container(
@@ -190,7 +190,7 @@ class _ShowOrderTransPageState extends State<ShowOrderTransPage> {
                                       height: height * 0.12,
                                       color: AppColor.blue,
                                       alignment: Alignment.center,
-                                      child: Text('จำนวน',
+                                      child: const Text('จำนวน',
                                           style: AppFont.bodyText14),
                                     ),
                                     Container(
@@ -198,10 +198,10 @@ class _ShowOrderTransPageState extends State<ShowOrderTransPage> {
                                       height: height * 0.12,
                                       color: AppColor.blue,
                                       alignment: Alignment.center,
-                                      child: Column(
+                                      child: const Column(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
-                                        children: const [
+                                        children: [
                                           Text('สถานะ/',
                                               style: AppFont.bodyText14),
                                           Text('การรับชำระ',
@@ -215,7 +215,7 @@ class _ShowOrderTransPageState extends State<ShowOrderTransPage> {
                                       color: AppColor.blue,
                                       alignment: Alignment.center,
                                       child: GestureDetector(
-                                          onTap: () {}, child: Text('')),
+                                          onTap: () {}, child: const Text('')),
                                     ),
                                   ],
                                 ),
@@ -253,7 +253,7 @@ class _ShowOrderTransPageState extends State<ShowOrderTransPage> {
                                                     orderTransList[index]
                                                                 .duedate ==
                                                             null
-                                                        ? Text('')
+                                                        ? const Text('')
                                                         : Text(
                                                             '${AppUtility.convertDateFormat(orderTransList[index].duedate!)}',
                                                             style: AppFont
@@ -282,11 +282,11 @@ class _ShowOrderTransPageState extends State<ShowOrderTransPage> {
                                                                       .circular(
                                                                           4)),
                                                         ),
-                                                        child: Row(
+                                                        child: const Row(
                                                           mainAxisAlignment:
                                                               MainAxisAlignment
                                                                   .center,
-                                                          children: const [
+                                                          children: [
                                                             Text('ซื้อ',
                                                                 style: AppFont
                                                                     .bodyText14),
@@ -304,11 +304,11 @@ class _ShowOrderTransPageState extends State<ShowOrderTransPage> {
                                                                       .circular(
                                                                           4)),
                                                         ),
-                                                        child: Row(
+                                                        child: const Row(
                                                           mainAxisAlignment:
                                                               MainAxisAlignment
                                                                   .center,
-                                                          children: const [
+                                                          children: [
                                                             Text('ขาย',
                                                                 style: AppFont
                                                                     .bodyText14),
@@ -441,7 +441,7 @@ class _ShowOrderTransPageState extends State<ShowOrderTransPage> {
                                                                   ],
                                                                 ),
                                                               ),
-                                                    SizedBox(height: 2),
+                                                    const SizedBox(height: 2),
                                                     // ข้อมูลการรับชำระ
                                                     orderTransList[index]
                                                                 .paymentStatus ==
