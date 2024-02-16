@@ -114,82 +114,86 @@ class _TradeConfirmState extends State<TradeConfirm> {
       child: isLoad == false
           ? Center(child: CircularProgressIndicator())
           : Scaffold(
-              body: Container(
-                width: double.maxFinite,
-                height: double.maxFinite,
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage('assets/images/page-bg.png'),
-                      fit: BoxFit.cover),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                      top: 6, bottom: 4, left: 8, right: 8),
-                  child: Column(
-                    children: [
-                      Container(
-                        width: width,
-                        height: height * 0.04,
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Image.asset('assets/images/logo-header.png',
-                                width: width * 0.35, height: height * 0.055),
-                            Spacer(),
-                            Text('${widget.userProfileList.memberRef}',
-                                style: AppFont.titleText04),
-                            AppUtility.buildPopUpMenu(
-                                widget.userPortfolioList!),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        width: double.maxFinite,
-                        height: height * 0.05,
-                        alignment: Alignment.center,
-                        child: const Text('ยืนยันรายการซื้อ/ขาย',
-                            style: AppFont.titleText01),
-                      ),
-                      Container(
-                        width: double.maxFinite,
-                        height: Platform.isAndroid
-                            ? height - (height * 0.17)
-                            : height - (height * 0.19),
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.all(Radius.circular(15)),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(5),
-                          child: Column(
+              body: SingleChildScrollView(
+                child: Container(
+                  width: Get.width,
+                  height: Get.height,
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage('assets/images/page-bg.png'),
+                        fit: BoxFit.cover),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        top: 6, bottom: 4, left: 8, right: 8),
+                    child: Column(
+                      children: [
+                        Container(
+                          width: width,
+                          height: height * 0.04,
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                      'ราคาตลาด${AppUtility.convertThaiDate(widget.marketPriceList[0].dateTime.toString())}',
-                                      style: AppFont.titleText12),
-                                ],
-                              ),
-                              //-- แสดงข้อมูลราคาทอง XAU/USD
-                              XAUUSDGold(
-                                  name: 'XAU/USD',
-                                  bidSpot:
-                                      widget.marketPriceList[0].bidSpot == null
-                                          ? 0
-                                          : widget.marketPriceList[0].bidSpot!,
-                                  askSpot:
-                                      widget.marketPriceList[0].askSpot == null
-                                          ? 0
-                                          : widget.marketPriceList[0].askSpot!),
-                              //-- แสดงข้อมูลการทำรายการซื้อ/ขาย
-                              SizedBox(height: 60),
-                              buildTimer(),
+                              Image.asset('assets/images/logo-header.png',
+                                  width: width * 0.35, height: height * 0.055),
+                              Spacer(),
+                              Text('${widget.userProfileList.memberRef}',
+                                  style: AppFont.titleText04),
+                              AppUtility.buildPopUpMenu(
+                                  widget.userPortfolioList!),
                             ],
                           ),
                         ),
-                      ),
-                    ],
+                        Container(
+                          width: double.maxFinite,
+                          height: height * 0.05,
+                          alignment: Alignment.center,
+                          child: const Text('ยืนยันรายการซื้อ/ขาย',
+                              style: AppFont.titleText01),
+                        ),
+                        Container(
+                          width: double.maxFinite,
+                          height: Platform.isAndroid
+                              ? height - (height * 0.17)
+                              : height - (height * 0.19),
+                          decoration: const BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.all(Radius.circular(15)),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(5),
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                        'ราคาตลาด${AppUtility.convertThaiDate(widget.marketPriceList[0].dateTime.toString())}',
+                                        style: AppFont.titleText12),
+                                  ],
+                                ),
+                                //-- แสดงข้อมูลราคาทอง XAU/USD
+                                XAUUSDGold(
+                                    name: 'XAU/USD',
+                                    bidSpot: widget
+                                                .marketPriceList[0].bidSpot ==
+                                            null
+                                        ? 0
+                                        : widget.marketPriceList[0].bidSpot!,
+                                    askSpot: widget
+                                                .marketPriceList[0].askSpot ==
+                                            null
+                                        ? 0
+                                        : widget.marketPriceList[0].askSpot!),
+                                //-- แสดงข้อมูลการทำรายการซื้อ/ขาย
+                                SizedBox(height: 60),
+                                buildTimer(),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -304,7 +308,7 @@ class _TradeConfirmState extends State<TradeConfirm> {
                             });
 
                             // call api append trade
-                            appendTradeOrder();
+                            await appendTradeOrder();
                             mainCtr.getPortfolio();
                           }
                         },
@@ -321,7 +325,7 @@ class _TradeConfirmState extends State<TradeConfirm> {
   }
 
   //-- Function บันทึกข้อมูลการซื้อ/ขาย
-  void appendTradeOrder() async {
+  Future<void> appendTradeOrder() async {
     try {
       // stop timer
       timer?.cancel();

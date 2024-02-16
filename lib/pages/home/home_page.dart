@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:langhong/common/app_dialog.dart';
 import 'package:langhong/controller/mainCtr.dart';
 import 'package:langhong/model/portfolio.dart';
 import 'package:langhong/model/user_profile.dart';
@@ -91,6 +92,9 @@ class _HomePageState extends State<HomePage> {
       socket.onDisconnect((_) {
         debugPrint('disconnect');
         socket.disconnect();
+
+        AppDialog.refreshLoginDialog(
+            context, socket, 2, 'ขาดการเชื่อมต่อจาก sever ราคา');
       });
     } catch (e) {
       throw Exception(e.toString());

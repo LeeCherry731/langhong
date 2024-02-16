@@ -7,7 +7,6 @@ import 'package:langhong/pages/login/login_page.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class AppDialog {
-
   // level-> 0=Success, 1=Infomation, 2=Error
   static showCustomDialog(BuildContext context, int levelMsg, String message) {
     return showDialog(
@@ -23,19 +22,23 @@ class AppDialog {
                 color: Colors.white,
               ),
               padding: EdgeInsets.all(15),
-              width: MediaQuery.of(context).size.width * 0.7,              
-              height: Platform.isAndroid ? MediaQuery.of(context).size.height * 0.55 : MediaQuery.of(context).size.height * 0.45,
+              width: MediaQuery.of(context).size.width * 0.7,
+              height: Platform.isAndroid
+                  ? MediaQuery.of(context).size.height * 0.55
+                  : MediaQuery.of(context).size.height * 0.45,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    child: levelMsg == 0 
-                      ? Image.asset('assets/images/accept.png', height: 70, width: 70)
-                      : levelMsg == 1
-                          ? Image.asset('assets/images/info-warning.png', height: 70, width: 70)
-                          : Image.asset('assets/images/error-warning.png', height: 70, width: 70)
-                  ),
+                      child: levelMsg == 0
+                          ? Image.asset('assets/images/accept.png',
+                              height: 70, width: 70)
+                          : levelMsg == 1
+                              ? Image.asset('assets/images/info-warning.png',
+                                  height: 70, width: 70)
+                              : Image.asset('assets/images/error-warning.png',
+                                  height: 70, width: 70)),
                   SizedBox(height: 30.0),
                   Text(message, style: AppFont.bodyText01),
                   SizedBox(height: 40.0),
@@ -58,7 +61,8 @@ class AppDialog {
   }
 
   // use for signout for Session Expired
-  static refreshLoginDialog(BuildContext context, IO.Socket socket, int levelMsg, String message) {
+  static refreshLoginDialog(
+      BuildContext context, IO.Socket socket, int levelMsg, String message) {
     return showDialog(
       context: context,
       barrierDismissible: false,
@@ -72,19 +76,23 @@ class AppDialog {
                 color: Colors.white,
               ),
               padding: EdgeInsets.all(15),
-              width: MediaQuery.of(context).size.width * 0.7,              
-              height: Platform.isAndroid ? MediaQuery.of(context).size.height * 0.55 : MediaQuery.of(context).size.height * 0.45,
+              width: MediaQuery.of(context).size.width * 0.7,
+              height: Platform.isAndroid
+                  ? MediaQuery.of(context).size.height * 0.55
+                  : MediaQuery.of(context).size.height * 0.45,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    child: levelMsg == 0 
-                      ? Image.asset('assets/images/accept.png', height: 70, width: 70)
-                      : levelMsg == 1
-                          ? Image.asset('assets/images/info-warning.png', height: 70, width: 70)
-                          : Image.asset('assets/images/error-warning.png', height: 70, width: 70)
-                  ),
+                      child: levelMsg == 0
+                          ? Image.asset('assets/images/accept.png',
+                              height: 70, width: 70)
+                          : levelMsg == 1
+                              ? Image.asset('assets/images/info-warning.png',
+                                  height: 70, width: 70)
+                              : Image.asset('assets/images/error-warning.png',
+                                  height: 70, width: 70)),
                   SizedBox(height: 30.0),
                   Text(message, style: AppFont.bodyText01),
                   SizedBox(height: 30.0),
@@ -97,8 +105,11 @@ class AppDialog {
                         elevation: 7),
                     onPressed: () {
                       // สั่งปิด Socket Connection จะเรียก socket.onDisconnect() ตอนเปืดให้เอง
-                      socket.dispose();
-                      socket.close();
+                      try {
+                        socket.dispose();
+                        socket.close();
+                      } catch (e) {}
+
                       Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(
