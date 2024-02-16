@@ -61,95 +61,100 @@ class _SettingsPageState extends State<SettingsPage> {
     debugPrint('SettingPage Build');
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
-    return Scaffold(
-      body: SingleChildScrollView(
-        physics: const ClampingScrollPhysics(),
-        child: Container(
-          width: Get.width,
-          height: Get.height,
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage('assets/images/page-bg.png'),
-                fit: BoxFit.cover),
-          ),
-          child: Padding(
-            padding:
-                const EdgeInsets.only(top: 6, bottom: 4, left: 8, right: 8),
-            child: Column(
-              children: [
-                Container(
-                  width: width,
-                  height: height * 0.04,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Image.asset('assets/images/logo-header.png',
-                          width: width * 0.35, height: height * 0.055),
-                      // Spacer(),
-                      Row(
-                        children: [
-                          Text('${mainCtr.userProfileList.value.memberRef}',
-                              style: AppFont.titleText04),
-                          AppUtility.buildPopUpMenu(
-                              mainCtr.userPortfolioList.value),
-                        ],
-                      ),
-                      // AppUtility.buildPopUpMenu(widget.userPortfolioList),
-                    ],
+    return GestureDetector(
+      onTap: () {
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
+      child: Scaffold(
+        body: SingleChildScrollView(
+          physics: const ClampingScrollPhysics(),
+          child: Container(
+            width: Get.width,
+            height: Get.height,
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage('assets/images/page-bg.png'),
+                  fit: BoxFit.cover),
+            ),
+            child: Padding(
+              padding:
+                  const EdgeInsets.only(top: 6, bottom: 4, left: 8, right: 8),
+              child: Column(
+                children: [
+                  Container(
+                    width: width,
+                    height: height * 0.04,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Image.asset('assets/images/logo-header.png',
+                            width: width * 0.35, height: height * 0.055),
+                        // Spacer(),
+                        Row(
+                          children: [
+                            Text('${mainCtr.userProfileList.value.memberRef}',
+                                style: AppFont.titleText04),
+                            AppUtility.buildPopUpMenu(
+                                mainCtr.userPortfolioList.value),
+                          ],
+                        ),
+                        // AppUtility.buildPopUpMenu(widget.userPortfolioList),
+                      ],
+                    ),
                   ),
-                ),
-                Container(
-                  width: double.maxFinite,
-                  height: height * 0.05,
-                  alignment: Alignment.center,
-                  child: const Text('เมนู', style: AppFont.titleText01),
-                ),
-                Container(
-                  width: double.maxFinite,
-                  height: Platform.isAndroid
-                      ? height - (height * 0.27)
-                      : height - (height * 0.3),
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                  Container(
+                    width: double.maxFinite,
+                    height: height * 0.05,
+                    alignment: Alignment.center,
+                    child: const Text('เมนู', style: AppFont.titleText01),
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(5),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                  'ราคาตลาด${AppUtility.convertThaiDate(mainCtr.marketPriceList[0].dateTime.toString())}',
-                                  style: AppFont.titleText12),
-                            ],
-                          ),
-                          //-- แสดงข้อมูลราคาทอง XAU/USD
-                          XAUUSDGold(
-                              name: 'XAU/USD',
-                              bidSpot:
-                                  mainCtr.marketPriceList[0].bidSpot == null
-                                      ? 0
-                                      : mainCtr.marketPriceList[0].bidSpot!,
-                              askSpot:
-                                  mainCtr.marketPriceList[0].askSpot == null
-                                      ? 0
-                                      : mainCtr.marketPriceList[0].askSpot!),
-                          //-- แสดงรายการเมนู
-                          SizedBox(height: 20),
-                          menuChangeUserName(width, height),
-                          Divider(thickness: 1, color: AppColor.lightGrey),
-                          menuChangePassword(width, height),
-                          Divider(thickness: 1, color: AppColor.lightGrey),
-                          menuExit(),
-                        ],
+                  Container(
+                    width: double.maxFinite,
+                    height: Platform.isAndroid
+                        ? height - (height * 0.27)
+                        : height - (height * 0.3),
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(5),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                    'ราคาตลาด${AppUtility.convertThaiDate(mainCtr.marketPriceList[0].dateTime.toString())}',
+                                    style: AppFont.titleText12),
+                              ],
+                            ),
+                            //-- แสดงข้อมูลราคาทอง XAU/USD
+                            XAUUSDGold(
+                                name: 'XAU/USD',
+                                bidSpot:
+                                    mainCtr.marketPriceList[0].bidSpot == null
+                                        ? 0
+                                        : mainCtr.marketPriceList[0].bidSpot!,
+                                askSpot:
+                                    mainCtr.marketPriceList[0].askSpot == null
+                                        ? 0
+                                        : mainCtr.marketPriceList[0].askSpot!),
+                            //-- แสดงรายการเมนู
+                            SizedBox(height: 20),
+                            menuChangeUserName(width, height),
+                            Divider(thickness: 1, color: AppColor.lightGrey),
+                            menuChangePassword(width, height),
+                            Divider(thickness: 1, color: AppColor.lightGrey),
+                            menuExit(),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

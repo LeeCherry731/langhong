@@ -32,6 +32,24 @@ class _LoginPageState extends State<LoginPage> {
   UserProfile? userProfileList;
   UserPortfolio? userPortfolioList;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final isRemember = false.obs;
+  @override
+  void initState() {
+    super.initState();
+    getRemember();
+    loginFingerPrint();
+  }
+
+  void getRemember() async {
+    final saveUser = await AppSecureStorage.getUserName() ?? '';
+    final savePass = await AppSecureStorage.getPassword() ?? '';
+
+    if (savePass.length > 1) {
+      isRemember(true);
+    }
+    userName.text = saveUser;
+    passWord.text = savePass;
+  }
 
   final mainCtr = Get.put(MainCtr(), tag: "MainCtr");
   //String userName = '', passWord = '';
@@ -47,6 +65,7 @@ class _LoginPageState extends State<LoginPage> {
     } catch (e) {
       print(e);
     }
+    return null;
   }
 
   Future<bool?> getBioFingerprint() async {
@@ -187,12 +206,6 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   @override
-  void initState() {
-    loginFingerPrint();
-    super.initState();
-  }
-
-  @override
   void dispose() {
     userName.dispose();
     passWord.dispose();
@@ -203,34 +216,62 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
-    return SafeArea(
-      child: Scaffold(
-        body: Container(
-          width: double.maxFinite,
-          height: double.maxFinite,
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage('assets/images/login-bg.png'),
-                fit: BoxFit.cover),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.only(top: 30),
-            child: SingleChildScrollView(
-              child: Form(
-                key: formKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset('assets/images/logo-header.png',
-                        width: width * 0.8, height: height * 0.3),
-                    inputUserName(width, height),
-                    SizedBox(height: 15),
-                    inputPassword(width, height),
-                    SizedBox(height: 30),
-                    loginBtn(width, height),
-                    SizedBox(height: 15),
-                    touchIdBtn(width, height),
-                  ],
+    return GestureDetector(
+      onTap: () {
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
+      child: SafeArea(
+        child: Scaffold(
+          body: Container(
+            width: double.maxFinite,
+            height: double.maxFinite,
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage('assets/images/login-bg.png'),
+                  fit: BoxFit.cover),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.only(top: 30),
+              child: SingleChildScrollView(
+                child: Form(
+                  key: formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset('assets/images/logo-header.png',
+                          width: width * 0.8, height: height * 0.3),
+                      inputUserName(width, height),
+                      const SizedBox(height: 15),
+                      inputPassword(width, height),
+                      SizedBox(
+                        width: width * 0.6,
+                        child: GestureDetector(onTap: () {
+                          isRemember.value = !isRemember.value;
+                        }, child: Obx(
+                          () {
+                            return Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                SizedBox(
+                                  width: 30,
+                                  child: Checkbox(
+                                      value: isRemember.value,
+                                      onChanged: (v) {
+                                        isRemember.value = !isRemember.value;
+                                      }),
+                                ),
+                                Text("จำรหัสผ่าน", style: AppFont.bodyText06)
+                              ],
+                            );
+                          },
+                        )),
+                      ),
+                      SizedBox(height: 30),
+                      loginBtn(width, height),
+                      SizedBox(height: 15),
+                      touchIdBtn(width, height),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -372,6 +413,14 @@ class _LoginPageState extends State<LoginPage> {
               }
               //-- Login Sีuccess
               else {
+                if (isRemember.value) {
+                  AppSecureStorage.setUserName(userName.text.trim());
+                  AppSecureStorage.setPassword(passWord.text.trim());
+                } else {
+                  AppSecureStorage.setUserName('');
+                  AppSecureStorage.setPassword('');
+                }
+
                 mainCtr.userProfileList(value);
                 setState(() {
                   userProfileList = value;

@@ -26,6 +26,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: "/home", page: () => const LoginPage()),
       ],
       initialRoute: "/home",
+      theme: ThemeData(useMaterial3: false),
     );
   }
 }

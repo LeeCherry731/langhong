@@ -97,152 +97,167 @@ class _TradePageState extends State<TradePage> {
 
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
-    return Scaffold(
-      body: Container(
-        width: double.maxFinite,
-        height: double.maxFinite,
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage('assets/images/page-bg.png'),
-              fit: BoxFit.cover),
-        ),
-        child: SingleChildScrollView(
-          child: Padding(
-            padding:
-                const EdgeInsets.only(top: 6, bottom: 4, left: 8, right: 8),
-            child: Column(
-              children: [
-                Container(
-                  width: width,
-                  height: height * 0.04,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Image.asset('assets/images/logo-header.png',
-                          width: width * 0.35, height: height * 0.055),
-                      // Spacer(),
-                      Row(
-                        children: [
-                          Text('${mainCtr.userProfileList.value.memberRef}',
-                              style: AppFont.titleText04),
-                          AppUtility.buildPopUpMenu(
-                              mainCtr.userPortfolioList.value),
-                        ],
-                      ),
-                      // AppUtility.buildPopUpMenu(mainCtr.userPortfolioList),
-                    ],
-                  ),
-                ),
-                Container(
-                  width: double.maxFinite,
-                  height: height * 0.05,
-                  alignment: Alignment.center,
-                  child: const Text('ซื้อ/ขาย', style: AppFont.titleText01),
-                ),
-                Container(
-                  width: double.maxFinite,
-                  height: Platform.isAndroid
-                      ? height - (height * 0.27)
-                      : height - (height * 0.3),
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(15)),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(5),
-                    child: Column(
+    return GestureDetector(
+      onTap: () {
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
+      child: Scaffold(
+        body: Container(
+          width: double.maxFinite,
+          height: double.maxFinite,
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage('assets/images/page-bg.png'),
+                fit: BoxFit.cover),
+          ),
+          child: SingleChildScrollView(
+            child: Padding(
+              padding:
+                  const EdgeInsets.only(top: 6, bottom: 4, left: 8, right: 8),
+              child: Column(
+                children: [
+                  Container(
+                    width: width,
+                    height: height * 0.04,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
+                        Image.asset('assets/images/logo-header.png',
+                            width: width * 0.35, height: height * 0.055),
+                        // Spacer(),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(
-                                'ราคาตลาด${AppUtility.convertThaiDate(mainCtr.marketPriceList[0].dateTime.toString())}',
-                                style: AppFont.titleText12),
+                            Text('${mainCtr.userProfileList.value.memberRef}',
+                                style: AppFont.titleText04),
+                            AppUtility.buildPopUpMenu(
+                                mainCtr.userPortfolioList.value),
                           ],
                         ),
-                        //-- แสดงข้อมูลราคาทอง XAU/USD
-                        XAUUSDGold(
-                            name: 'XAU/USD',
-                            bidSpot: mainCtr.marketPriceList[0].bidSpot == null
-                                ? 0
-                                : mainCtr.marketPriceList[0].bidSpot!,
-                            askSpot: mainCtr.marketPriceList[0].askSpot == null
-                                ? 0
-                                : mainCtr.marketPriceList[0].askSpot!),
-                        //-- แสดงข้อมูลราคาทอง 99.99%
-                        marketPriceThaiGold99(
-                            goldType: 99,
-                            bid99: mainCtr
-                                        .userPortfolioList.value.memberLevel ==
-                                    '1'
-                                ? mainCtr.marketPriceList[0].bid99Bg1!
-                                : mainCtr.userPortfolioList.value.memberLevel ==
-                                        '2'
-                                    ? mainCtr.marketPriceList[0].bid99Bg2!
-                                    : mainCtr.userPortfolioList.value
-                                                .memberLevel ==
-                                            '3'
-                                        ? mainCtr.marketPriceList[0].bid99Bg3!
-                                        : mainCtr.marketPriceList[0].bid99Bg4!,
-                            ask99: mainCtr
-                                        .userPortfolioList.value.memberLevel ==
-                                    '1'
-                                ? mainCtr.marketPriceList[0].ask99Bg1!
-                                : mainCtr.userPortfolioList.value.memberLevel ==
-                                        '2'
-                                    ? mainCtr.marketPriceList[0].ask99Bg2!
-                                    : mainCtr.userPortfolioList.value
-                                                .memberLevel ==
-                                            '3'
-                                        ? mainCtr.marketPriceList[0].ask99Bg3!
-                                        : mainCtr.marketPriceList[0].ask99Bg4!),
-                        //-- แสดงข้อมูลราคาทอง 96.50%
-                        marketPriceThaiGold96(
-                            goldType: 96,
-                            bid96: mainCtr
-                                        .userPortfolioList.value.memberLevel ==
-                                    '1'
-                                ? mainCtr.marketPriceList[0].bid96Bg1!
-                                : mainCtr.userPortfolioList.value.memberLevel ==
-                                        '2'
-                                    ? mainCtr.marketPriceList[0].bid96Bg2!
-                                    : mainCtr.userPortfolioList.value
-                                                .memberLevel ==
-                                            '3'
-                                        ? mainCtr.marketPriceList[0].bid96Bg3!
-                                        : mainCtr.marketPriceList[0].bid96Bg4!,
-                            ask96: mainCtr
-                                        .userPortfolioList.value.memberLevel ==
-                                    '1'
-                                ? mainCtr.marketPriceList[0].ask96Bg1!
-                                : mainCtr.userPortfolioList.value.memberLevel ==
-                                        '2'
-                                    ? mainCtr.marketPriceList[0].ask96Bg2!
-                                    : mainCtr.userPortfolioList.value
-                                                .memberLevel ==
-                                            '3'
-                                        ? mainCtr.marketPriceList[0].ask96Bg3!
-                                        : mainCtr.marketPriceList[0].ask96Bg4!),
-                        //-- ทำรายการซื้อ/ขาย
-                        Form(
-                          key: formKey,
-                          child: Column(
-                            children: [
-                              SizedBox(height: 10),
-                              quantitySection(width, height),
-                              SizedBox(height: 2),
-                              placeCheckSection(width, height),
-                              priceSection(width, height),
-                              SizedBox(height: 18),
-                              confirmBtn(width, height)
-                            ],
-                          ),
-                        ),
+                        // AppUtility.buildPopUpMenu(mainCtr.userPortfolioList),
                       ],
                     ),
                   ),
-                ),
-              ],
+                  Container(
+                    width: double.maxFinite,
+                    height: height * 0.05,
+                    alignment: Alignment.center,
+                    child: const Text('ซื้อ/ขาย', style: AppFont.titleText01),
+                  ),
+                  Container(
+                    width: double.maxFinite,
+                    height: Platform.isAndroid
+                        ? height - (height * 0.27)
+                        : height - (height * 0.3),
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(5),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                  'ราคาตลาด${AppUtility.convertThaiDate(mainCtr.marketPriceList[0].dateTime.toString())}',
+                                  style: AppFont.titleText12),
+                            ],
+                          ),
+                          //-- แสดงข้อมูลราคาทอง XAU/USD
+                          XAUUSDGold(
+                              name: 'XAU/USD',
+                              bidSpot:
+                                  mainCtr.marketPriceList[0].bidSpot == null
+                                      ? 0
+                                      : mainCtr.marketPriceList[0].bidSpot!,
+                              askSpot:
+                                  mainCtr.marketPriceList[0].askSpot == null
+                                      ? 0
+                                      : mainCtr.marketPriceList[0].askSpot!),
+                          //-- แสดงข้อมูลราคาทอง 99.99%
+                          marketPriceThaiGold99(
+                              goldType: 99,
+                              bid99: mainCtr.userPortfolioList.value
+                                          .memberLevel ==
+                                      '1'
+                                  ? mainCtr.marketPriceList[0].bid99Bg1!
+                                  : mainCtr.userPortfolioList.value
+                                              .memberLevel ==
+                                          '2'
+                                      ? mainCtr.marketPriceList[0].bid99Bg2!
+                                      : mainCtr.userPortfolioList.value
+                                                  .memberLevel ==
+                                              '3'
+                                          ? mainCtr.marketPriceList[0].bid99Bg3!
+                                          : mainCtr
+                                              .marketPriceList[0].bid99Bg4!,
+                              ask99: mainCtr.userPortfolioList.value
+                                          .memberLevel ==
+                                      '1'
+                                  ? mainCtr.marketPriceList[0].ask99Bg1!
+                                  : mainCtr.userPortfolioList.value
+                                              .memberLevel ==
+                                          '2'
+                                      ? mainCtr.marketPriceList[0].ask99Bg2!
+                                      : mainCtr.userPortfolioList.value
+                                                  .memberLevel ==
+                                              '3'
+                                          ? mainCtr.marketPriceList[0].ask99Bg3!
+                                          : mainCtr
+                                              .marketPriceList[0].ask99Bg4!),
+                          //-- แสดงข้อมูลราคาทอง 96.50%
+                          marketPriceThaiGold96(
+                              goldType: 96,
+                              bid96: mainCtr.userPortfolioList.value
+                                          .memberLevel ==
+                                      '1'
+                                  ? mainCtr.marketPriceList[0].bid96Bg1!
+                                  : mainCtr.userPortfolioList.value
+                                              .memberLevel ==
+                                          '2'
+                                      ? mainCtr.marketPriceList[0].bid96Bg2!
+                                      : mainCtr.userPortfolioList.value
+                                                  .memberLevel ==
+                                              '3'
+                                          ? mainCtr.marketPriceList[0].bid96Bg3!
+                                          : mainCtr
+                                              .marketPriceList[0].bid96Bg4!,
+                              ask96: mainCtr.userPortfolioList.value
+                                          .memberLevel ==
+                                      '1'
+                                  ? mainCtr.marketPriceList[0].ask96Bg1!
+                                  : mainCtr.userPortfolioList.value
+                                              .memberLevel ==
+                                          '2'
+                                      ? mainCtr.marketPriceList[0].ask96Bg2!
+                                      : mainCtr.userPortfolioList.value
+                                                  .memberLevel ==
+                                              '3'
+                                          ? mainCtr.marketPriceList[0].ask96Bg3!
+                                          : mainCtr
+                                              .marketPriceList[0].ask96Bg4!),
+                          //-- ทำรายการซื้อ/ขาย
+                          Form(
+                            key: formKey,
+                            child: Column(
+                              children: [
+                                SizedBox(height: 10),
+                                quantitySection(width, height),
+                                SizedBox(height: 2),
+                                placeCheckSection(width, height),
+                                priceSection(width, height),
+                                SizedBox(height: 18),
+                                confirmBtn(width, height)
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

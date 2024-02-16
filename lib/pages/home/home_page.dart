@@ -50,7 +50,7 @@ class _HomePageState extends State<HomePage> {
       socket.onConnect((_) => debugPrint('connect: ${socket.id}'));
       socket.onConnect((_) {
         socket.on('marketprice', (data) {
-          //debugPrint('Market Price-> $data');
+          debugPrint('Market Price-> $data');
           dataList = data as List;
           marketPriceList = [];
           for (final items in dataList) {
