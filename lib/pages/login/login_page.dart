@@ -51,7 +51,7 @@ class _LoginPageState extends State<LoginPage> {
     passWord.text = savePass;
   }
 
-  final mainCtr = Get.put(MainCtr(), tag: "MainCtr");
+  final mainCtr = Get.find<MainCtr>(tag: "MainCtr");
   //String userName = '', passWord = '';
 
   Future<bool?> hasBiometrics() async {
@@ -148,7 +148,7 @@ class _LoginPageState extends State<LoginPage> {
             (mainCtr.userPortfolioList.value.memberLevel == '' ||
                     mainCtr.userPortfolioList.value.memberLevel == null)
                 ? getOut()
-                : Get.to(() => HomePage(
+                : Get.offAll(() => HomePage(
                       tabPage: 0,
                     ));
             // Navigator.pushAndRemoveUntil(
@@ -451,7 +451,7 @@ class _LoginPageState extends State<LoginPage> {
                   (userPortfolioList?.memberLevel == '' ||
                           userPortfolioList?.memberLevel == null)
                       ? getOut()
-                      : Get.to(() => HomePage(
+                      : Get.offAll(() => HomePage(
                             tabPage: 0,
                           ));
                   // Navigator.pushAndRemoveUntil(

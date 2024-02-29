@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:langhong/controller/mainCtr.dart';
 import 'package:langhong/pages/login/login_page.dart';
 
 void main() {
@@ -10,6 +11,8 @@ void main() {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
+  Get.put(MainCtr(), tag: "MainCtr");
+
   runApp(const MyApp());
 }
 

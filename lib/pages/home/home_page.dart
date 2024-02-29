@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:langhong/common/app_dialog.dart';
 import 'package:langhong/controller/mainCtr.dart';
 import 'package:langhong/model/portfolio.dart';
 import 'package:langhong/model/user_profile.dart';
+import 'package:langhong/pages/login/login_page.dart';
 import 'package:langhong/pages/trade/trade_page.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:socket_io_client/socket_io_client.dart';
@@ -89,13 +91,15 @@ class _HomePageState extends State<HomePage> {
         });
       });
       //-- สั่งไว้สำหรับเรียกปิด socket.dispose()->socket.close() ตอนสั่ง logout
-      socket.onDisconnect((_) {
+      socket.onDisconnect((_) async {
         debugPrint('disconnect');
         socket.disconnect();
 
         AppDialog.refreshLoginDialog(
             context, socket, 2, 'ขาดการเชื่อมต่อจาก sever ราคา');
       });
+      socket.onConnectTimeout((data) => AppDialog.refreshLoginDialog(
+          context, socket, 2, 'ไม่สามารถเชื่อมต่อ sever ราคาได้'));
     } catch (e) {
       throw Exception(e.toString());
     }
@@ -125,50 +129,57 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     debugPrint('Home Build');
-    return Scaffold(
-      body: SafeArea(
-        child: isLoad == false
-            ? Center(child: CircularProgressIndicator())
-            : getTabPage(),
-      ),
-      bottomNavigationBar: NavigationBarTheme(
-        data: NavigationBarThemeData(
-          indicatorColor: Colors.redAccent,
-          labelTextStyle: MaterialStateProperty.all(AppFont.bodyText04),
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (didPop) async {
+        if (didPop) return;
+        AppDialog.showExitCustomDialog(context);
+      },
+      child: Scaffold(
+        body: SafeArea(
+          child: isLoad == false
+              ? Center(child: CircularProgressIndicator())
+              : getTabPage(),
         ),
-        child: NavigationBar(
-          height: height * 0.11,
-          backgroundColor: Colors.black,
-          labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
-          animationDuration: const Duration(seconds: 3),
-          selectedIndex: currentIndex,
-          onDestinationSelected: (index) =>
-              setState(() => currentIndex = index),
-          destinations: [
-            NavigationDestination(
-              icon: Image.asset('assets/images/market.png',
-                  width: 22, height: 22, color: Colors.white),
-              //selectedIcon: ,
-              label: 'ตลาด',
-            ),
-            NavigationDestination(
-              icon: Image.asset('assets/images/trade.png',
-                  width: 28, height: 28, color: Colors.white),
-              label: 'ซื้อ/ขาย',
-            ),
-            const NavigationDestination(
-              icon: Icon(Icons.person, color: Colors.white, size: 26),
-              label: 'พอร์ท',
-            ),
-            const NavigationDestination(
-              icon: Icon(Icons.poll, color: Colors.white, size: 26),
-              label: 'รายงาน',
-            ),
-            const NavigationDestination(
-              icon: Icon(Icons.toc, color: Colors.white, size: 28),
-              label: 'เมนู',
-            ),
-          ],
+        bottomNavigationBar: NavigationBarTheme(
+          data: NavigationBarThemeData(
+            indicatorColor: Colors.redAccent,
+            labelTextStyle: MaterialStateProperty.all(AppFont.bodyText04),
+          ),
+          child: NavigationBar(
+            height: height * 0.11,
+            backgroundColor: Colors.black,
+            labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
+            animationDuration: const Duration(seconds: 3),
+            selectedIndex: currentIndex,
+            onDestinationSelected: (index) =>
+                setState(() => currentIndex = index),
+            destinations: [
+              NavigationDestination(
+                icon: Image.asset('assets/images/market.png',
+                    width: 22, height: 22, color: Colors.white),
+                //selectedIcon: ,
+                label: 'ตลาด',
+              ),
+              NavigationDestination(
+                icon: Image.asset('assets/images/trade.png',
+                    width: 28, height: 28, color: Colors.white),
+                label: 'ซื้อ/ขาย',
+              ),
+              const NavigationDestination(
+                icon: Icon(Icons.person, color: Colors.white, size: 26),
+                label: 'พอร์ท',
+              ),
+              const NavigationDestination(
+                icon: Icon(Icons.poll, color: Colors.white, size: 26),
+                label: 'รายงาน',
+              ),
+              const NavigationDestination(
+                icon: Icon(Icons.toc, color: Colors.white, size: 28),
+                label: 'เมนู',
+              ),
+            ],
+          ),
         ),
       ),
     );
